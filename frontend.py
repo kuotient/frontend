@@ -113,6 +113,8 @@ def main():
                     }
             
             print(data)
+            prompt = data["prompt"]
+            num_images = int(data["num_images_per_prompt"])
             
             st.session_state.save_parameter = data
             # 리퀘스트를 보낼 URL
@@ -137,14 +139,14 @@ def main():
                 st.session_state['remove_bg'] = False
             
             executed_time = time.time() - start_time
-            per_emoji_time = executed_time / len(data['num_images_per_prompt'])
+            per_emoji_time = executed_time / len(num_images)
             st.success(f"🎉 이모지 생성 완료! 이모지 당 {per_emoji_time:.2f}초 밖에 소요하지 않았습니다!")
             # st.balloons()
                 
         if st.session_state['image_list'] :
             
             st.markdown("#### Generated Emoji's preview(s) of:")
-            st.markdown(f"`{data['prompt']}`")
+            st.markdown(f"`{prompt}`")
             img_index = image_select(
                 label="",
                 images= st.session_state['image_list'],
