@@ -6,6 +6,7 @@ import requests
 import streamlit_nested_layout
 from streamlit_image_select import image_select
 import os
+import time
 
 from PIL import Image
 from rembg import remove
@@ -115,7 +116,8 @@ def main():
             
             st.session_state.save_parameter = data
             # 리퀘스트를 보낼 URL
-            with st.spinner("🔮마법같은 능력으로 이모지 생성 중..."):
+            start_time = time.time()
+            with st.spinner("🔮 마법같은 능력으로 이모지 생성 중..."):
             
                 if st.session_state.model_select == "한국어" :
                     response = requests.post(f"{st.secrets['url']}/kor_submit", json=data)
@@ -134,15 +136,18 @@ def main():
                 st.session_state.submit = False
                 st.session_state['remove_bg'] = False
             
-            st.success("🎉이모지 생성 완료!")
+            executed_time = time.time() - start_time
+            st.success(f"🎉 이모지 생성 완료! {executed_time:.2f}초 밖에 걸리지 않았어요!")
+            st.balloons()
                 
         if st.session_state['image_list'] :
             
-            st.markdown("#### Generated Emoji's preview(s)")
+            st.markdown("#### Generated Emoji's preview(s) of:")
+            st.markdown(f"`{st.session_state.prompt}`")
             img_index = image_select(
                 label="",
                 images= st.session_state['image_list'],
-                use_container_width = 10,
+                use_container_width = 8,
                 return_value = "index" 
             )
             
