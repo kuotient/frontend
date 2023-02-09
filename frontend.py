@@ -141,12 +141,12 @@ def main():
             executed_time = time.time() - start_time
             per_emoji_time = executed_time / len(num_images)
             st.success(f"🎉 이모지 생성 완료! 이모지 당 {per_emoji_time:.2f}초 밖에 소요하지 않았습니다!")
+            st.markdown(f"`{prompt}`")
             # st.balloons()
                 
         if st.session_state['image_list'] :
             
             st.markdown("#### Generated Emoji's preview(s) of:")
-            st.markdown(f"`{prompt}`")
             img_index = image_select(
                 label="",
                 images= st.session_state['image_list'],
