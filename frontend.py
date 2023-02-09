@@ -139,7 +139,7 @@ def main():
                 st.session_state['remove_bg'] = False
             
             executed_time = time.time() - start_time
-            per_emoji_time = executed_time / len(num_images)
+            per_emoji_time = executed_time / num_images
             st.success(f"🎉 이모지 생성 완료! 이모지 당 {per_emoji_time:.2f}초 밖에 소요하지 않았습니다!")
             st.markdown(f"`{prompt}`")
             # st.balloons()
