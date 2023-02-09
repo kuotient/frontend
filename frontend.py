@@ -18,7 +18,7 @@ st.sidebar.title("Text-to-Emoji 😊")
 st.sidebar.caption("프롬프트를 입력해 Emoji를 생성하세요!.")
 st.sidebar.markdown("Made by team [WE-FUSION](https://github.com/boostcampaitech4lv23nlp2/final-project-level2-nlp-11)")
 st.sidebar.markdown("---")
-st.sidebar.header("Settings")
+st.sidebar.header("Settings 🔧")
 
 # toggle = st.sidebar.checkbox("Toggle Update", value=True, help="Continuously update the pallete with every change in the app.")
 # palette_size = int(st.sidebar.number_input("palette size", min_value=1, max_value=20, value=5, step=1, help="Number of colors to infer from the image."))
@@ -137,13 +137,14 @@ def main():
                 st.session_state['remove_bg'] = False
             
             executed_time = time.time() - start_time
-            st.success(f"🎉 이모지 생성 완료! {executed_time:.2f}초 밖에 걸리지 않았어요!")
-            st.balloons()
+            per_emoji_time = executed_time / len(data['num_images_per_prompt'])
+            st.success(f"🎉 이모지 생성 완료! 이모지 당 {per_emoji_time:.2f}초 밖에 소요하지 않았습니다!")
+            # st.balloons()
                 
         if st.session_state['image_list'] :
             
             st.markdown("#### Generated Emoji's preview(s) of:")
-            st.markdown(f"`{st.session_state.prompt}`")
+            st.markdown(f"`{data['prompt']}`")
             img_index = image_select(
                 label="",
                 images= st.session_state['image_list'],
@@ -151,7 +152,6 @@ def main():
                 return_value = "index" 
             )
             
-            st.write('###')
             st.markdown("#### Select Emoji")
 
             with st.container() :
