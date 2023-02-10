@@ -315,7 +315,7 @@ def main():
             # remove_bg = st.radio(" ", (False, True), label_visibility="collapsed")
     st.markdown("##")
     st.markdown("---")
-    with st.expander("이게 도대체 뭔가요?"):
+    with st.expander("이게 도대체 뭔가요?", expanded=True):
         st.markdown("Text-to-Emoji, 부제 Emoji Diffusion은 Text를 입력으로 받아 텍스트의 내용에 맞게 Emoji를 출력하는 프로젝트입니다. \
             \n이 프로젝트는 [Latent Diffusion](https://arxiv.org/abs/2112.10752)을 기반으로 만들어졌으며, 각 Emoji의 데이터셋으로 fine tuned 된 모델을 사용하고 있습니다.")
     with st.expander("더 잘 사용할 수 있는 방법들"):
