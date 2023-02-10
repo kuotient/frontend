@@ -30,7 +30,7 @@ def main():
     if "submit" not in st.session_state:
         st.session_state["submit"] = False
     if "prompt" not in st.session_state:
-        st.session_state["prompt"] = ""
+        st.session_state["prompt"] = None
     if "image_list" not in st.session_state:
         st.session_state["image_list"] = []
     if "output_size" not in st.session_state:
@@ -54,7 +54,7 @@ def main():
         "언어 선택",
         ("English",
         "한국어",),
-        help="한국어 모델은 현재 개발중입니다."
+        help="언어를 선택할 수 있습니다. 영어 선택 시 성능이 좀 더 좋은 경향이 있습니다."
     )
     # st.sidebar.markdown("이모지 스타일")
     image_style = st.sidebar.selectbox(
@@ -117,10 +117,15 @@ def main():
     with col1:
         generate = st.button(label="Generate Emoji", type="primary")
         if generate:
-            st.session_state.submit = True
+            if not st.session_state.prompt:
+                st.warning("프롬프트를 입력해주세요.")
+            elif st.session_state.prompt:
+                st.session_state.submit = True
+            else:
+                st.error("Something is wrong.")
         
     with col2:
-        feeling_lucky = st.button(label="I'm Feeling lucky", type="secondary",)
+        feeling_lucky = st.button(label="I'm Feeling lucky", type="secondary", help="랜덤 프롬프트를 생성합니다.")
             
         if feeling_lucky:
             if st.session_state.model_select == "English":
