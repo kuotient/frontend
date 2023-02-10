@@ -183,7 +183,7 @@ def main():
                 st.error("Something is wrong.")
         
     with col2:
-        feeling_lucky = st.button(label="I'm Feeling Lucky", type="secondary", help="랜덤 프롬프트를 생성합니다.")
+        feeling_lucky = st.button(label="I'm Feeling Lucky", type="secondary", help="무작위 프롬프트를 이용해 Emoji를 생성합니다.")
             
         if feeling_lucky:
             if st.session_state.model_select == "English":
