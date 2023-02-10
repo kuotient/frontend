@@ -102,13 +102,13 @@ def main():
     st.session_state['num_inference'] = int(num_inference)
     
     if st.session_state.num_inference == 1:
-        st.sidebar.markdown("예상 소요 시간: 5~6초")
+        st.sidebar.info("예상 소요 시간: 5~6초", icon="ℹ️")
     elif st.session_state.num_inference == 2:
-        st.sidebar.markdown("예상 소요 시간: 10~12초")
+        st.sidebar.info("예상 소요 시간: 10~12초", icon="ℹ️")
     elif st.session_state.num_inference == 3:
-        st.sidebar.markdown("예상 소요 시간: 16~20초")
+        st.sidebar.info("예상 소요 시간: 16~20초", icon="ℹ️")
     else:
-        st.sidebar.markdown("예상 소요 시간: 20~25초")
+        st.sidebar.info("예상 소요 시간: 20~25초", icon="ℹ️")
 
     # st.sidebar.markdown("cfg scale")
     guidance_scale = st.sidebar.slider("Cfg scale",0, 25, 10,help="이모지가 prompt를 따라가는 정도를 조절할 수 있습니다. 0~25까지 선택 가능합니다.")
