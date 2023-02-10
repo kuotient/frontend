@@ -30,7 +30,7 @@ def main():
     if "submit" not in st.session_state:
         st.session_state["submit"] = False
     if "prompt" not in st.session_state:
-        st.session_state["prompt"] = None
+        st.session_state["prompt"] = ""
     if "image_list" not in st.session_state:
         st.session_state["image_list"] = []
     if "output_size" not in st.session_state:
