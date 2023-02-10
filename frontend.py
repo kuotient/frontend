@@ -260,25 +260,25 @@ def main():
                 img = st.session_state['image_list'][img_index]
 
             # with image_col2:
-            down_button, remove_bg = st.columns([1,1])
-            with down_button:
-                buf = io.BytesIO()
-                img.save(buf, format = "PNG")
-                buf_img = buf.getvalue()
+            # down_button, remove_bg = st.columns([1,1])
+            # with down_button:
+            buf = io.BytesIO()
+            img.save(buf, format = "PNG")
+            buf_img = buf.getvalue()
 
-                btn = st.download_button(
-                    label="Download image",
-                    data= buf_img,
-                    file_name = 'generated_image.png',
-                    mime="image/png",
-                    )
-            with remove_bg:
+            btn = st.download_button(
+                label="Download image",
+                data= buf_img,
+                file_name = 'generated_image.png',
+                mime="image/png",
+                )
+
             # st.markdown("###### 배경 제거 (beta)")
             # remove_bg = st.radio(" ", (False, True), label_visibility="collapsed")
-                remove_bg = st.checkbox("배경 제거 (beta)", value=False, key="remove_bg", help="뒷 배경을 제거합니다.")
-                if remove_bg != st.session_state['remove_bg'] :
-                    st.session_state['remove_bg'] = remove_bg
-                    st.experimental_rerun()
+        remove_bg = st.sidebar.checkbox("배경 제거 (beta)", value=False, key="remove_bg", help="뒷 배경을 제거합니다.")
+        if remove_bg != st.session_state['remove_bg'] :
+            st.session_state['remove_bg'] = remove_bg
+            st.experimental_rerun()
 
     
 if __name__ == "__main__" :
