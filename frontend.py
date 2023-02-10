@@ -314,6 +314,9 @@ def main():
             # st.markdown("###### 배경 제거 (beta)")
             # remove_bg = st.radio(" ", (False, True), label_visibility="collapsed")
     st.markdown("##")
+    st.markdown("##")
+    st.markdown("##")
+    st.markdown("##")
     st.markdown("---")
     under_col1, under_col2 = st.columns([3,1])
     with under_col1:
