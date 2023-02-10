@@ -12,12 +12,13 @@ from PIL import Image
 from rembg import remove
 
 # st.set_page_config(page_title="Text-to-Emoji", layout="wide", page_icon="😊")
-st.set_page_config(page_title="Text-to-Emoji", layout="wide", page_icon="🔮")
+# st.set_page_config(page_title="Text-to-Emoji", layout="wide", page_icon="🔮")
+st.set_page_config(page_title="Text-to-Emoji", page_icon="🔮")
 st.image("g_logo.png")
-st.sidebar.title("Text-to-Emoji 🔮")
-st.sidebar.caption("프롬프트를 입력해 Emoji를 생성하세요!.")
+st.sidebar.title("🔮 Text-to-Emoji")
+st.sidebar.caption("프롬프트를 입력해 Emoji를 생성해보세요!")
 st.sidebar.markdown("Made by team [WE-FUSION](https://github.com/boostcampaitech4lv23nlp2/final-project-level2-nlp-11)")
-st.sidebar.header("Settings 🔧")
+st.sidebar.header("🔧 Settings")
 
 # toggle = st.sidebar.checkbox("Toggle Update", value=True, help="Continuously update the pallete with every change in the app.")
 # palette_size = int(st.sidebar.number_input("palette size", min_value=1, max_value=20, value=5, step=1, help="Number of colors to infer from the image."))
@@ -262,7 +263,7 @@ def main():
                         display: block;
                         margin-left: auto;
                         margin-right: auto;
-                        width: 100%;
+                        width: 80%;
                     }
                 </style>
                 """, unsafe_allow_html=True)
@@ -280,7 +281,7 @@ def main():
             img.save(buf, format = "PNG")
             buf_img = buf.getvalue()
 
-            remove_bg = st.sidebar.checkbox("배경 제거 (beta)", value=False, key="remove_bg", help="뒷 배경을 제거합니다.")
+            remove_bg = st.checkbox("배경 제거 (beta)", value=False, key="remove_bg", help="뒷 배경을 제거합니다.")
             if remove_bg != st.session_state['remove_bg'] :
                 st.session_state['remove_bg'] = remove_bg
                 st.experimental_rerun()
