@@ -51,10 +51,10 @@ def main():
         st.session_state['image_style'] = ""
     
     model_select = st.sidebar.radio(
-        "언어 선택",
+        "프롬프트 언어 선택",
         ("English",
         "한국어",),
-        help="언어를 선택할 수 있습니다. 영어 선택 시 성능이 좀 더 좋은 경향이 있습니다."
+        help="프롬프트에 쓸 언어를 선택할 수 있습니다. 영어 입력 선택 시 성능이 좀 더 좋은 경향이 있습니다."
     )
     # st.sidebar.markdown("이모지 스타일")
     image_style = st.sidebar.selectbox(
@@ -99,6 +99,14 @@ def main():
 
     # st.sidebar.markdown("Number of outputs")
     num_inference = st.sidebar.slider("생성할 이모지 갯수",1,4,3,help="생성할 이모지의 갯수를 선택할 수 있습니다. 1~4개까지 선택 가능합니다.")
+    if st.session_state.num_inference == 1:
+        st.sidebar.markdown("예상 소요 시간: 5~6초")
+    elif st.session_state.num_inference == 2:
+        st.sidebar.markdown("예상 소요 시간: 10~12초")
+    elif st.session_state.num_inference == 3:
+        st.sidebar.markdown("예상 소요 시간: 16~20초")
+    else:
+        st.sidebar.markdown("예상 소요 시간: 20~25초")
 
     # st.sidebar.markdown("cfg scale")
     guidance_scale = st.sidebar.slider("Cfg scale",0, 25, 10,help="이모지가 prompt를 따라가는 정도를 조절할 수 있습니다. 0~25까지 선택 가능합니다.")
@@ -227,7 +235,7 @@ def main():
             
     if st.session_state['image_list'] :
         
-        st.markdown("#### Generated Emoji's preview(s)")
+        # st.markdown("#### Generated Emoji's preview(s)")
         img_index = image_select(
             label="",
             images= st.session_state['image_list'],
@@ -267,7 +275,7 @@ def main():
             buf_img = buf.getvalue()
 
             btn = st.download_button(
-                label="Download image",
+                label="Download emoji",
                 data= buf_img,
                 file_name = 'generated_image.png',
                 mime="image/png",
