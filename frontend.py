@@ -227,7 +227,7 @@ def main():
             
     if st.session_state['image_list'] :
         
-        st.markdown("#### Generated Emoji's preview(s) of:")
+        st.markdown("#### Generated Emoji's preview(s)")
         img_index = image_select(
             label="",
             images= st.session_state['image_list'],
@@ -238,13 +238,13 @@ def main():
         st.markdown("#### Select Emoji")
 
         with st.container() :
-            image_col1 , image_col2 = st.columns([4,1])
+            image_col1 , image_col2 = st.columns([4,2])
             with image_col1 :
                 st.markdown(
                     """
                     <style>
                         [data-testid=stImage]{
-                            text-align: center;
+                            text-align: left;
                             display: block;
                             margin-left: auto;
                             margin-right: auto;
@@ -272,17 +272,12 @@ def main():
                     )
                 
                 st.markdown("##")
-                st.markdown("###### 배경 제거 (beta)")
-                remove_bg = st.radio(" ", (False, True), label_visibility="collapsed")
+                # st.markdown("###### 배경 제거 (beta)")
+                # remove_bg = st.radio(" ", (False, True), label_visibility="collapsed")
+                remove_bg = st.checkbox("배경 제거 (beta)", value=False, key="remove_bg", help="뒷 배경을 제거합니다.")
                 if remove_bg != st.session_state['remove_bg'] :
                     st.session_state['remove_bg'] = remove_bg
                     st.experimental_rerun()
-
-
-
-    # with right :
-
-    # st.sidebar.markdown("언어 선택")
 
     
 if __name__ == "__main__" :
