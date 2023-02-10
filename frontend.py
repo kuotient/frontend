@@ -112,11 +112,14 @@ def main():
 
     # st.sidebar.markdown("cfg scale")
     guidance_scale = st.sidebar.slider("Cfg scale",0, 25, 10,help="이모지가 prompt를 따라가는 정도를 조절할 수 있습니다. 0~25까지 선택 가능합니다.")
+    st.session_state['guidance_scale'] = int(guidance_scale)
+    
+    if st.session_state['guidance_scale'] >= 15:
+        st.sidebar.warning("과도한 cfg scale 파라미터는 이미지 품질의 저하를 일으킬 수 있습니다.", icon="⚠️")
 
 
     st.session_state['model_select'] = model_select
     st.session_state['output_size'] = int(output_option)
-    st.session_state['guidance_scale'] = int(guidance_scale)
     st.session_state['inference_step'] = 30
     
     
@@ -137,7 +140,6 @@ def main():
             #     submit = st.form_submit_button(label="submit")
             #     if submit:
             #         st.session_state.submit = True
-    st.markdown("---")
     st.text_area(
         label= "Prompt (Text)",
         placeholder = "Hot air balloon floating peacefully above rolling countryside dotted with farms and fields." if st.session_state.model_select== "English" else "귀여운 토끼",
@@ -228,10 +230,10 @@ def main():
         
         executed_time = time.time() - start_time
         per_emoji_time = executed_time / num_images
-        st.success(f"🎉 이모지 생성 완료! 이모지 당 {per_emoji_time:.2f}초 소요되었습니다.")
-        st.markdown("사용한 프롬프트")
-        st.markdown(f"`{prompt}`")
-        st.markdown("---")
+        with col3:
+            st.success(f"🎉 이모지 생성 완료! 이모지 당 {per_emoji_time:.2f}초 소요되었습니다.")
+        with st.expander("사용한 프롬프트"):
+            st.markdown(f"`{prompt}`")
         # st.balloons()
             
     if st.session_state['image_list'] :
@@ -281,7 +283,8 @@ def main():
                 file_name = 'generated_image.png',
                 mime="image/png",
                 )
-
+            if btn:
+                st.balloon()
             # st.markdown("###### 배경 제거 (beta)")
             # remove_bg = st.radio(" ", (False, True), label_visibility="collapsed")
         remove_bg = st.sidebar.checkbox("배경 제거 (beta)", value=False, key="remove_bg", help="뒷 배경을 제거합니다.")
