@@ -68,10 +68,10 @@ def main():
             #     submit = st.form_submit_button(label="submit")
             #     if submit:
             #         st.session_state.submit = True
-        st.markdown("---")    
+        st.markdown("---")
         st.text_area(
             label= "Input Text(Prompt)",
-            placeholder = "A cute rabbit",
+            placeholder = "A cute rabbit" if st.session_state.model_select=="English" else "귀여운 토끼",
             value = st.session_state.prompt,
             key="prompt",
             max_chars=75,
@@ -86,11 +86,16 @@ def main():
                 st.session_state.submit = True
             
         with col2:
-            with open("prompt.txt") as f:
-                sample_prompts = f.read().splitlines()
-                
             feeling_lucky = st.button(label="I'm Feeling lucky", type="secondary",)
+                
             if feeling_lucky:
+                if st.session_state.model_select == "English":
+                    lang_prompt = "prompt.txt"
+                else:
+                    lang_prompt = "kor_prompt.txt"
+                    
+                with open(lang_prompt) as f:
+                    sample_prompts = f.read().splitlines()
                 lucky_prompt = random.choice(sample_prompts)
                 # print(lucky_prompt)
                 st.session_state.submit = True
@@ -99,6 +104,7 @@ def main():
             if feeling_lucky:
                 data = {
                     "prompt": lucky_prompt,
+                    "model": st.session_state.image_style,
                     "guidance_scale":  st.session_state.guidance_scale,
                     "num_images_per_prompt":  st.session_state.num_inference,
                     "num_inference_steps":  st.session_state.inference_step,
@@ -107,6 +113,7 @@ def main():
             elif generate:
                 data = {
                     "prompt": st.session_state.prompt ,
+                    "model": st.session_state.image_style,
                     "guidance_scale":  st.session_state.guidance_scale,
                     "num_images_per_prompt":  st.session_state.num_inference,
                     "num_inference_steps":  st.session_state.inference_step,
@@ -220,7 +227,7 @@ def main():
     # st.sidebar.markdown("이모지 스타일")
     image_style = st.sidebar.selectbox(
         "이모지 스타일",
-        ("open-emoji","noto-emoji"),
+        ("openmoji","notoemoji"),
         help="특정 스타일의 이모지를 생성할 수 있습니다."
     )
     
