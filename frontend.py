@@ -12,7 +12,7 @@ from PIL import Image
 from rembg import remove
 
 # st.set_page_config(page_title="Text-to-Emoji", layout="wide", page_icon="😊")
-st.set_page_config(page_title="Text-to-Emoji", layout="wide", page_icon="😊")
+st.set_page_config(page_title="Text-to-Emoji", layout="wide", page_icon="🔮")
 st.image("small_logo.png")
 st.sidebar.title("Text-to-Emoji 😊")
 st.sidebar.caption("프롬프트를 입력해 Emoji를 생성하세요!.")
@@ -70,15 +70,18 @@ def main():
             #     if submit:
             #         st.session_state.submit = True
             
-        st.text_input(
+        st.text_area(
             label= "Input Text(Prompt)",
             placeholder = "A cute rabbit",
             value = st.session_state.prompt,
             key="prompt",
+            max_chars=75,
+            help="프롬프트를 입력해주세요. 최대 75자까지 입력 가능합니다."
             # label_visibility="collapsed",
         )
+        st.markdown("---")
         # co3, col1, col2, col4 = st.columns([2,1,1,2])
-        col1, col2, col3 = st.columns([1,1,2])
+        col1, col2, col3 = st.columns([1,1,3])
         with col1:
             generate = st.button(label="Generate Emoji", type="primary")
             if generate:
@@ -126,8 +129,12 @@ def main():
                 else :
                     response = requests.post(f"{st.secrets['url']}/eng_submit", json=data)
 
-                image_byte_list = response.json()["images"]
-                remove_image_byte_list = response.json()["removes"]
+                try:
+                    image_byte_list = response.json()["images"]
+                    remove_image_byte_list = response.json()["removes"]
+                except Exception as e:
+                    st.error(f"❌ 에러가 발생했습니다. 에러 메시지: {e}. 잠시 후 시도해주세요.")
+                    st.stop()
 
                 decode_image_list = [Image.open(io.BytesIO(base64.b64decode(image))) for image in image_byte_list ]
                 remove_decode_image_list = [Image.open(io.BytesIO(base64.b64decode(image))) for image in remove_image_byte_list ]
@@ -141,7 +148,9 @@ def main():
             executed_time = time.time() - start_time
             per_emoji_time = executed_time / num_images
             st.success(f"🎉 이모지 생성 완료! 이모지 당 {per_emoji_time:.2f}초 밖에 소요하지 않았습니다!")
+            st.markdown("사용 된 프롬프트")
             st.markdown(f"`{prompt}`")
+            st.markdown("---")
             # st.balloons()
                 
         if st.session_state['image_list'] :
@@ -216,10 +225,10 @@ def main():
     )
     
     # st.sidebar.markdown("이모지 아웃풋 크기")
-    output_option = st.sidebar.radio(
+    output_option = st.sidebar.selectbox(
         "이모지 아웃풋 크기",
         ("512","256","128"),
-        help = "이모지의 크기를 선택할 수 있습니다."
+        help = "이모지의 출력 크기를 선택할 수 있습니다."
     )
 
     # st.sidebar.markdown("Number of outputs")
