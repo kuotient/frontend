@@ -63,7 +63,7 @@ def main():
         help="특정 스타일의 이모지를 생성할 수 있습니다. notoemoji는 구글에서 제공하는 이모지이며, openmoji는 오픈소스로 제공되는 이모지입니다."
     )
     
-    if st.session_state.image_style = "openmoji":
+    if st.session_state.image_style == "openmoji":
         st.image("https://openmoji.org/data/color/svg/1F422.svg", width=20)
     else:
         st.image("https://fonts.gstatic.com/s/e/notoemoji/latest/1f422/512.gif", width=20)
