@@ -69,6 +69,9 @@ def main():
                     <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f422/512.gif" width="50" height="50">
                     <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f60e/512.gif" width="50" height="50">
                     <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f48e/512.gif" width="50" height="50">
+                    <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f47b/512.gif" width="50" height="50">
+                    <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f917/512.gif" width="50" height="50">
+                    <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f496/512.gif" width="50" height="50">
                 </div>
                 """
     openmoji_html = """
@@ -76,6 +79,9 @@ def main():
                         <img src="https://openmoji.org/data/color/svg/1F422.svg" width="50" height="50">
                         <img src="https://openmoji.org/data/color/svg/1F60E.svg" width="50" height="50">
                         <img src="https://openmoji.org/data/color/svg/1F48E.svg" width="50" height="50">
+                        <img src="https://openmoji.org/data/color/svg/1F47B.svg" width="50" height="50">
+                        <img src="https://openmoji.org/data/color/svg/1F917.svg" width="50" height="50">
+                        <img src="https://openmoji.org/data/color/svg/1F496.svg" width="50" height="50">
                     </div>
                     """
 
