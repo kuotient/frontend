@@ -14,10 +14,22 @@ from rembg import remove
 # st.set_page_config(page_title="Text-to-Emoji", layout="wide", page_icon="😊")
 st.set_page_config(page_title="Text-to-Emoji", layout="wide", page_icon="🔮")
 # st.set_page_config(page_title="Text-to-Emoji", page_icon="🔮")
+streamlit_style = """
+			<style>
+			@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+
+			html, body, [class*="css"]  {
+			font-family: 'Roboto', sans-serif;
+			}
+			</style>
+			"""
+st.markdown(streamlit_style, unsafe_allow_html=True)
+
+
 st.image("g_logo.png")
 st.sidebar.title("🔮 Text-to-Emoji")
 st.sidebar.caption("프롬프트를 입력해 Emoji를 생성해보세요!")
-st.sidebar.markdown("Made by team [WE-FUSION](https://github.com/boostcampaitech4lv23nlp2/final-project-level2-nlp-11)")
+st.sidebar.markdown("Made by Team [WE-FUSION](https://github.com/boostcampaitech4lv23nlp2/final-project-level2-nlp-11)")
 st.sidebar.header("🔧 Settings")
 
 # toggle = st.sidebar.checkbox("Toggle Update", value=True, help="Continuously update the pallete with every change in the app.")
