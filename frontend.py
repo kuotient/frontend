@@ -235,31 +235,33 @@ def main():
             return_value = "index" 
         )
         
-        st.markdown("#### Select Emoji")
+        st.markdown("#### Selected Emoji")
 
         with st.container() :
-            image_col1 , image_col2 = st.columns([4,2])
-            with image_col1 :
-                st.markdown(
-                    """
-                    <style>
-                        [data-testid=stImage]{
-                            text-align: left;
-                            display: block;
-                            margin-left: auto;
-                            margin-right: auto;
-                            width: 100%;
-                        }
-                    </style>
-                    """, unsafe_allow_html=True)
-                if st.session_state["remove_bg"] :
-                    st.image(st.session_state['remove_bg_image_list'][img_index], use_column_width="auto")
-                    img = st.session_state['remove_bg_image_list'][img_index]
-                else :
-                    st.image(st.session_state['image_list'][img_index], use_column_width="auto")
-                    img = st.session_state['image_list'][img_index]
+            # image_col1 , image_col2 = st.columns([4,2])
+            # with image_col1 :
+            st.markdown(
+                """
+                <style>
+                    [data-testid=stImage]{
+                        text-align: left;
+                        display: block;
+                        margin-left: auto;
+                        margin-right: auto;
+                        width: 100%;
+                    }
+                </style>
+                """, unsafe_allow_html=True)
+            if st.session_state["remove_bg"] :
+                st.image(st.session_state['remove_bg_image_list'][img_index], use_column_width="auto")
+                img = st.session_state['remove_bg_image_list'][img_index]
+            else :
+                st.image(st.session_state['image_list'][img_index], use_column_width="auto")
+                img = st.session_state['image_list'][img_index]
 
-            with image_col2 :
+            # with image_col2:
+            down_button, remove_bg = st.columns([1,1])
+            with down_button:
                 buf = io.BytesIO()
                 img.save(buf, format = "PNG")
                 buf_img = buf.getvalue()
@@ -270,10 +272,9 @@ def main():
                     file_name = 'generated_image.png',
                     mime="image/png",
                     )
-                
-                st.markdown("##")
-                # st.markdown("###### 배경 제거 (beta)")
-                # remove_bg = st.radio(" ", (False, True), label_visibility="collapsed")
+            with remove_bg:
+            # st.markdown("###### 배경 제거 (beta)")
+            # remove_bg = st.radio(" ", (False, True), label_visibility="collapsed")
                 remove_bg = st.checkbox("배경 제거 (beta)", value=False, key="remove_bg", help="뒷 배경을 제거합니다.")
                 if remove_bg != st.session_state['remove_bg'] :
                     st.session_state['remove_bg'] = remove_bg
