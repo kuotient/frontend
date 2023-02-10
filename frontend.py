@@ -18,7 +18,7 @@ st.set_page_config(page_title="Text-to-Emoji",
                    menu_items={
         'Contact': 'https://github.com/boostcampaitech4lv23nlp2/final-project-level2-nlp-11/issues',
         'Github': 'https://github.com/boostcampaitech4lv23nlp2/final-project-level2-nlp-11'
-        }
+        })
 # st.set_page_config(page_title="Text-to-Emoji", page_icon="🔮")
 streamlit_style = """
 			<style>
