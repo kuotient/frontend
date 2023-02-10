@@ -63,6 +63,7 @@ def main():
         help="특정 스타일의 이모지를 생성할 수 있습니다. notoemoji는 구글에서 제공하는 이모지이며, openmoji는 오픈소스로 제공되는 이모지입니다."
     )
     
+    st.session_state['image_style'] = image_style
     if st.session_state.image_style == "openmoji":
         st.sidebar.image("https://openmoji.org/data/color/svg/1F422.svg", width=100)
     else:
@@ -83,7 +84,6 @@ def main():
 
 
     st.session_state['model_select'] = model_select
-    st.session_state['image_style'] = image_style
     st.session_state['output_size'] = int(output_option)
     st.session_state['num_inference'] = int(num_inference)
     st.session_state['guidance_scale'] = int(guidance_scale)
