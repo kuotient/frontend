@@ -161,7 +161,7 @@ def main():
             #     submit = st.form_submit_button(label="submit")
             #     if submit:
             #         st.session_state.submit = True
-    st.text_area(
+    st.text_input(
         label= " ",
         placeholder = "Hot air balloon floating peacefully above rolling countryside dotted with farms and fields." if st.session_state.model_select== "English" else "귀여운 토끼",
         value = st.session_state.prompt,
