@@ -321,7 +321,7 @@ def main():
         st.markdown("- 마음에 드는 Emoji가 있으면, 다운로드 버튼을 눌러서 저장해보세요.")
         st.markdown("- 배경 제거 기능은 아직 beta 버전이기 때문에, 정확도가 떨어질 수 있습니다.")
         st.markdown("- Cfg scale factor는 모델이 얼마나 텍스트의 내용을 반영하는지를 결정하는 파라미터입니다. 25까지 설정 가능하지만, 15 이상의 값은 추천하지 않습니다.")
-    with st.expander("Diffusion 모델은 정말 신기해요! 어디서 더 이런 것을 볼 수 있죠?")
+    with st.expander("Diffusion 모델은 정말 신기해요! 어디서 더 이런 것을 볼 수 있죠?"):
         st.markdown("- [Stable Diffusion Huggingface spaces](https://huggingface.co/spaces/stabilityai/stable-diffusion)")
         st.markdown("- [WebUI](https://github.com/AUTOMATIC1111/stable-diffusion-webui)")
         st.markdown("- [Stable Diffusion 공식 디스코드](https://discord.com/invite/stablediffusion)")
