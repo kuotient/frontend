@@ -315,21 +315,23 @@ def main():
             # remove_bg = st.radio(" ", (False, True), label_visibility="collapsed")
     st.markdown("##")
     st.markdown("---")
-    with st.expander("이게 도대체 뭔가요?", expanded=True):
-        st.markdown("Text-to-Emoji, 부제 Emoji Diffusion은 Text를 입력으로 받아 텍스트의 내용에 맞게 Emoji를 출력하는 프로젝트입니다. \
-            \n이 프로젝트는 [Latent Diffusion](https://arxiv.org/abs/2112.10752)을 기반으로 만들어졌으며, 각 Emoji의 데이터셋으로 fine tuned 된 모델을 사용하고 있습니다.")
-    with st.expander("더 잘 사용할 수 있는 방법들"):
-        st.markdown("---")
-        st.markdown("- 프롬프트를 작성할 때, 주저하지 말고 길고 자세히 적어보세요. 문장의 길이가 길어질수록 더 많은 정보를 얻을 수 있습니다.")
-        st.markdown("- 마음에 드는 Emoji가 있으면, 다운로드 버튼을 눌러서 저장해보세요.")
-        st.markdown("- 배경 제거 기능은 아직 beta 버전이기 때문에, 정확도가 떨어질 수 있습니다.")
-        st.markdown("- Cfg scale factor는 모델이 얼마나 텍스트의 내용을 반영하는지를 결정하는 파라미터입니다. 25까지 설정 할 수 있지만, 15 이상의 값은 추천하지 않습니다.")
-        st.markdown("####")
-    with st.expander("Diffusion 모델은 정말 신기해요! 어디서 더 이런 것을 볼 수 있죠?"):
-        st.markdown("---")
-        st.markdown("- [Stable Diffusion Huggingface spaces](https://huggingface.co/spaces/stabilityai/stable-diffusion)")
-        st.markdown("- [WebUI](https://github.com/AUTOMATIC1111/stable-diffusion-webui)")
-        st.markdown("- [Stable Diffusion 공식 디스코드](https://discord.com/invite/stablediffusion)")
-        st.markdown("####")
+    under_col1, under_col2 = st.columns([3,1])
+    with under_col1:
+        with st.expander("이게 도대체 뭔가요?", expanded=True):
+            st.markdown("Text-to-Emoji, 부제 Emoji Diffusion은 Text를 입력으로 받아 텍스트의 내용에 맞게 Emoji를 출력하는 프로젝트입니다. \
+                \n이 프로젝트는 [Latent Diffusion](https://arxiv.org/abs/2112.10752)을 기반으로 만들어졌으며, 각 Emoji의 데이터셋으로 fine tuned 된 모델을 사용하고 있습니다.")
+        with st.expander("더 잘 사용할 수 있는 방법들"):
+            st.markdown("---")
+            st.markdown("- 프롬프트를 작성할 때, 주저하지 말고 길고 자세히 적어보세요. 문장의 길이가 길어질수록 더 많은 정보를 얻을 수 있습니다.")
+            st.markdown("- 마음에 드는 Emoji가 있으면, 다운로드 버튼을 눌러서 저장해보세요.")
+            st.markdown("- 배경 제거 기능은 아직 beta 버전이기 때문에, 정확도가 떨어질 수 있습니다.")
+            st.markdown("- Cfg scale factor는 모델이 얼마나 텍스트의 내용을 반영하는지를 결정하는 파라미터입니다. 25까지 설정 할 수 있지만, 15 이상의 값은 추천하지 않습니다.")
+            st.markdown("####")
+        with st.expander("Diffusion 모델은 정말 신기해요! 어디서 더 이런 것을 볼 수 있죠?"):
+            st.markdown("---")
+            st.markdown("- [Stable Diffusion Huggingface spaces](https://huggingface.co/spaces/stabilityai/stable-diffusion)")
+            st.markdown("- [WebUI](https://github.com/AUTOMATIC1111/stable-diffusion-webui)")
+            st.markdown("- [Stable Diffusion 공식 디스코드](https://discord.com/invite/stablediffusion)")
+            st.markdown("####")
 if __name__ == "__main__" :
     main()
