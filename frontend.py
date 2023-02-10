@@ -17,7 +17,6 @@ st.image("small_logo.png")
 st.sidebar.title("Text-to-Emoji 😊")
 st.sidebar.caption("프롬프트를 입력해 Emoji를 생성하세요!.")
 st.sidebar.markdown("Made by team [WE-FUSION](https://github.com/boostcampaitech4lv23nlp2/final-project-level2-nlp-11)")
-st.sidebar.markdown("---")
 st.sidebar.header("Settings 🔧")
 
 # toggle = st.sidebar.checkbox("Toggle Update", value=True, help="Continuously update the pallete with every change in the app.")
@@ -69,7 +68,7 @@ def main():
             #     submit = st.form_submit_button(label="submit")
             #     if submit:
             #         st.session_state.submit = True
-            
+        st.markdown("---")    
         st.text_area(
             label= "Input Text(Prompt)",
             placeholder = "A cute rabbit",
@@ -133,7 +132,7 @@ def main():
                     image_byte_list = response.json()["images"]
                     remove_image_byte_list = response.json()["removes"]
                 except Exception as e:
-                    st.error(f"❌ 에러가 발생했습니다. 에러 메시지: {e}. 잠시 후 시도해주세요.")
+                    st.error(f"❌ 에러가 발생했습니다. 서버 상의 문제일 수 있습니다. 잠시 후 시도해주세요.")
                     st.stop()
 
                 decode_image_list = [Image.open(io.BytesIO(base64.b64decode(image))) for image in image_byte_list ]
@@ -195,12 +194,12 @@ def main():
                     btn = st.download_button(
                         label="Download image",
                         data= buf_img,
-                        file_name = 'generation_image.png',
+                        file_name = 'generated_image.png',
                         mime="image/png",
                         )
                     
                     st.markdown("##")
-                    st.markdown("###### Remove Background")
+                    st.markdown("###### 배경 제거 (beta)")
                     remove_bg = st.radio(" ", (False, True), label_visibility="collapsed")
                     if remove_bg != st.session_state['remove_bg'] :
                         st.session_state['remove_bg'] = remove_bg
@@ -218,7 +217,7 @@ def main():
         help="한국어 모델은 현재 개발중입니다."
     )
     # st.sidebar.markdown("이모지 스타일")
-    image_style = st.sidebar.radio(
+    image_style = st.sidebar.selectbox(
         "이모지 스타일",
         ("open-emoji","noto-emoji"),
         help="특정 스타일의 이모지를 생성할 수 있습니다."
@@ -235,7 +234,7 @@ def main():
     num_inference = st.sidebar.slider("생성할 이모지 갯수",1,4,3,help="생성할 이모지의 개수를 선택할 수 있습니다.")
 
     # st.sidebar.markdown("cfg scale")
-    guidance_scale = st.sidebar.slider("Cfg scale",0, 50, 10,help="이모지가 prompt를 따라가는 정도를 조절할 수 있습니다.")
+    guidance_scale = st.sidebar.slider("Cfg scale",0, 25, 7,help="이모지가 prompt를 따라가는 정도를 조절할 수 있습니다.")
 
 
     st.session_state['model_select'] = model_select
