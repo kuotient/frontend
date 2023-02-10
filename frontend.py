@@ -288,7 +288,7 @@ def main():
             btn = st.download_button(
                 label="Download emoji",
                 data= buf_img,
-                file_name = f'{prompt}.png',
+                file_name = f'{st.session_state["prompt"]}.png',
                 mime="image/png",
                 )
             if btn:
