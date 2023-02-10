@@ -78,9 +78,8 @@ def main():
             help="프롬프트를 입력해주세요. 최대 75자까지 입력 가능합니다."
             # label_visibility="collapsed",
         )
-        st.markdown("---")
         # co3, col1, col2, col4 = st.columns([2,1,1,2])
-        col1, col2, col3 = st.columns([1,1,3])
+        col1, col2, col3 = st.columns([1,1,4])
         with col1:
             generate = st.button(label="Generate Emoji", type="primary")
             if generate:
@@ -113,8 +112,10 @@ def main():
                     "num_inference_steps":  st.session_state.inference_step,
                     "size":  st.session_state.output_size
                     }
-            
-            print(data)
+            try:
+                print(data)
+            except Exception as e:
+                st.warning("새로고침이 필요합니다. 새로고침 후 시도해주시기 바랍니다.")
             prompt = data["prompt"]
             num_images = int(data["num_images_per_prompt"])
             
