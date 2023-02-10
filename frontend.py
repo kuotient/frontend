@@ -25,7 +25,7 @@ st.sidebar.header("Settings 🔧")
 # seed = int(st.sidebar.number_input("random seed", value=42, help="Seed used for all random samplings."))
 
 def main():
-    left, right = st.columns([4, 1])
+    # left, right = st.columns([4, 1])
 
     if "submit" not in st.session_state:
         st.session_state["submit"] = False
@@ -50,174 +50,6 @@ def main():
     if "image_style" not in st.session_state :
         st.session_state['image_style'] = ""
     
-    with left :
-        # st.markdown("## Text-to-Emoji")
-
-        # with st.form(key="my_form", clear_on_submit=True):
-            # col1, col2 = st.columns([8, 2])
-
-            # with col1:
-            #     st.text_input(
-            #         label= "Input Text(Prompt)",
-            #         placeholder = "A cute rabbit",
-            #         value = st.session_state.prompt,
-            #         key="prompt",
-            #         label_visibility="collapsed",
-            #     )
-            # with col2:
-            #     submit = st.form_submit_button(label="submit")
-            #     if submit:
-            #         st.session_state.submit = True
-        st.markdown("---")
-        st.text_area(
-            label= "Input Text(Prompt)",
-            placeholder = "A cute rabbit" if st.session_state.model_select== "한국어" else "귀여운 토끼",
-            value = st.session_state.prompt,
-            key="prompt",
-            max_chars=75,
-            help="프롬프트를 입력해주세요. 최대 75자까지 입력 가능합니다."
-            # label_visibility="collapsed",
-        )
-        # co3, col1, col2, col4 = st.columns([2,1,1,2])
-        col1, col2, col3 = st.columns([1,1,4])
-        with col1:
-            generate = st.button(label="Generate Emoji", type="primary")
-            if generate:
-                st.session_state.submit = True
-            
-        with col2:
-            feeling_lucky = st.button(label="I'm Feeling lucky", type="secondary",)
-                
-            if feeling_lucky:
-                if st.session_state.model_select == "English":
-                    lang_prompt = "prompt.txt"
-                else:
-                    lang_prompt = "kor_prompt.txt"
-                    
-                with open(lang_prompt) as f:
-                    sample_prompts = f.read().splitlines()
-                lucky_prompt = random.choice(sample_prompts)
-                # print(lucky_prompt)
-                st.session_state.submit = True
-        
-        if st.session_state.submit:
-            if feeling_lucky:
-                data = {
-                    "prompt": lucky_prompt,
-                    "model": st.session_state.image_style,
-                    "guidance_scale":  st.session_state.guidance_scale,
-                    "num_images_per_prompt":  st.session_state.num_inference,
-                    "num_inference_steps":  st.session_state.inference_step,
-                    "size":  st.session_state.output_size
-                }
-            elif generate:
-                data = {
-                    "prompt": st.session_state.prompt ,
-                    "model": st.session_state.image_style,
-                    "guidance_scale":  st.session_state.guidance_scale,
-                    "num_images_per_prompt":  st.session_state.num_inference,
-                    "num_inference_steps":  st.session_state.inference_step,
-                    "size":  st.session_state.output_size
-                    }
-            try:
-                print(data)
-            except Exception as e:
-                st.warning("새로고침이 필요합니다. 새로고침 후 시도해주시기 바랍니다.")
-            prompt = data["prompt"]
-            num_images = int(data["num_images_per_prompt"])
-            
-            st.session_state.save_parameter = data
-            # 리퀘스트를 보낼 URL
-            start_time = time.time()
-            with st.spinner("🔮 마법같은 능력으로 이모지 생성 중..."):
-            
-                if st.session_state.model_select == "한국어" :
-                    response = requests.post(f"{st.secrets['url']}/kor_submit", json=data)
-                else :
-                    response = requests.post(f"{st.secrets['url']}/eng_submit", json=data)
-
-                try:
-                    image_byte_list = response.json()["images"]
-                    remove_image_byte_list = response.json()["removes"]
-                except Exception as e:
-                    st.error(f"❌ 에러가 발생했습니다. 서버 상의 문제일 수 있습니다. 잠시 후 시도해주세요.")
-                    st.stop()
-
-                decode_image_list = [Image.open(io.BytesIO(base64.b64decode(image))) for image in image_byte_list ]
-                remove_decode_image_list = [Image.open(io.BytesIO(base64.b64decode(image))) for image in remove_image_byte_list ]
-            
-                st.session_state['image_list'] = decode_image_list
-                st.session_state['remove_bg_image_list'] = remove_decode_image_list
-                
-                st.session_state.submit = False
-                st.session_state['remove_bg'] = False
-            
-            executed_time = time.time() - start_time
-            per_emoji_time = executed_time / num_images
-            st.success(f"🎉 이모지 생성 완료! 이모지 당 {per_emoji_time:.2f}초 소요되었습니다.")
-            st.markdown("사용한 프롬프트")
-            st.markdown(f"`{prompt}`")
-            st.markdown("---")
-            # st.balloons()
-                
-        if st.session_state['image_list'] :
-            
-            st.markdown("#### Generated Emoji's preview(s) of:")
-            img_index = image_select(
-                label="",
-                images= st.session_state['image_list'],
-                use_container_width = 8,
-                return_value = "index" 
-            )
-            
-            st.markdown("#### Select Emoji")
-
-            with st.container() :
-                image_col1 , image_col2 = st.columns([4,1])
-                with image_col1 :
-                    st.markdown(
-                        """
-                        <style>
-                            [data-testid=stImage]{
-                                text-align: center;
-                                display: block;
-                                margin-left: auto;
-                                margin-right: auto;
-                                width: 100%;
-                            }
-                        </style>
-                        """, unsafe_allow_html=True)
-                    if st.session_state["remove_bg"] :
-                        st.image(st.session_state['remove_bg_image_list'][img_index], use_column_width="auto")
-                        img = st.session_state['remove_bg_image_list'][img_index]
-                    else :
-                        st.image(st.session_state['image_list'][img_index], use_column_width="auto")
-                        img = st.session_state['image_list'][img_index]
-    
-                with image_col2 :
-                    buf = io.BytesIO()
-                    img.save(buf, format = "PNG")
-                    buf_img = buf.getvalue()
-
-                    btn = st.download_button(
-                        label="Download image",
-                        data= buf_img,
-                        file_name = 'generated_image.png',
-                        mime="image/png",
-                        )
-                    
-                    st.markdown("##")
-                    st.markdown("###### 배경 제거 (beta)")
-                    remove_bg = st.radio(" ", (False, True), label_visibility="collapsed")
-                    if remove_bg != st.session_state['remove_bg'] :
-                        st.session_state['remove_bg'] = remove_bg
-                        st.experimental_rerun()
-
-
-
-    # with right :
-
-    # st.sidebar.markdown("언어 선택")
     model_select = st.sidebar.radio(
         "언어 선택",
         ("English",
@@ -251,6 +83,176 @@ def main():
     st.session_state['num_inference'] = int(num_inference)
     st.session_state['guidance_scale'] = int(guidance_scale)
     st.session_state['inference_step'] = 30
+    
+    
+        # st.markdown("## Text-to-Emoji")
+
+        # with st.form(key="my_form", clear_on_submit=True):
+            # col1, col2 = st.columns([8, 2])
+
+            # with col1:
+            #     st.text_input(
+            #         label= "Input Text(Prompt)",
+            #         placeholder = "A cute rabbit",
+            #         value = st.session_state.prompt,
+            #         key="prompt",
+            #         label_visibility="collapsed",
+            #     )
+            # with col2:
+            #     submit = st.form_submit_button(label="submit")
+            #     if submit:
+            #         st.session_state.submit = True
+    st.markdown("---")
+    st.text_area(
+        label= "Input Text(Prompt)",
+        placeholder = "A cute rabbit" if st.session_state.model_select== "English" else "귀여운 토끼",
+        value = st.session_state.prompt,
+        key="prompt",
+        max_chars=75,
+        help="프롬프트를 입력해주세요. 최대 75자까지 입력 가능합니다."
+        # label_visibility="collapsed",
+    )
+    # co3, col1, col2, col4 = st.columns([2,1,1,2])
+    col1, col2, col3 = st.columns([1,1,4])
+    with col1:
+        generate = st.button(label="Generate Emoji", type="primary")
+        if generate:
+            st.session_state.submit = True
+        
+    with col2:
+        feeling_lucky = st.button(label="I'm Feeling lucky", type="secondary",)
+            
+        if feeling_lucky:
+            if st.session_state.model_select == "English":
+                lang_prompt = "prompt.txt"
+            else:
+                lang_prompt = "kor_prompt.txt"
+                
+            with open(lang_prompt) as f:
+                sample_prompts = f.read().splitlines()
+            lucky_prompt = random.choice(sample_prompts)
+            # print(lucky_prompt)
+            st.session_state.submit = True
+    
+    if st.session_state.submit:
+        if feeling_lucky:
+            data = {
+                "prompt": lucky_prompt,
+                "model": st.session_state.image_style,
+                "guidance_scale":  st.session_state.guidance_scale,
+                "num_images_per_prompt":  st.session_state.num_inference,
+                "num_inference_steps":  st.session_state.inference_step,
+                "size":  st.session_state.output_size
+            }
+        elif generate:
+            data = {
+                "prompt": st.session_state.prompt ,
+                "model": st.session_state.image_style,
+                "guidance_scale":  st.session_state.guidance_scale,
+                "num_images_per_prompt":  st.session_state.num_inference,
+                "num_inference_steps":  st.session_state.inference_step,
+                "size":  st.session_state.output_size
+                }
+        try:
+            print(data)
+        except Exception as e:
+            st.warning("새로고침이 필요합니다. 새로고침 후 시도해주시기 바랍니다.")
+        prompt = data["prompt"]
+        num_images = int(data["num_images_per_prompt"])
+        
+        st.session_state.save_parameter = data
+        # 리퀘스트를 보낼 URL
+        start_time = time.time()
+        with st.spinner("🔮 마법같은 능력으로 이모지 생성 중..."):
+        
+            if st.session_state.model_select == "한국어" :
+                response = requests.post(f"{st.secrets['url']}/kor_submit", json=data)
+            else :
+                response = requests.post(f"{st.secrets['url']}/eng_submit", json=data)
+
+            try:
+                image_byte_list = response.json()["images"]
+                remove_image_byte_list = response.json()["removes"]
+            except Exception as e:
+                st.error(f"❌ 에러가 발생했습니다. 서버 상의 문제일 수 있습니다. 잠시 후 시도해주세요.")
+                st.stop()
+
+            decode_image_list = [Image.open(io.BytesIO(base64.b64decode(image))) for image in image_byte_list ]
+            remove_decode_image_list = [Image.open(io.BytesIO(base64.b64decode(image))) for image in remove_image_byte_list ]
+        
+            st.session_state['image_list'] = decode_image_list
+            st.session_state['remove_bg_image_list'] = remove_decode_image_list
+            
+            st.session_state.submit = False
+            st.session_state['remove_bg'] = False
+        
+        executed_time = time.time() - start_time
+        per_emoji_time = executed_time / num_images
+        st.success(f"🎉 이모지 생성 완료! 이모지 당 {per_emoji_time:.2f}초 소요되었습니다.")
+        st.markdown("사용한 프롬프트")
+        st.markdown(f"`{prompt}`")
+        st.markdown("---")
+        # st.balloons()
+            
+    if st.session_state['image_list'] :
+        
+        st.markdown("#### Generated Emoji's preview(s) of:")
+        img_index = image_select(
+            label="",
+            images= st.session_state['image_list'],
+            use_container_width = 8,
+            return_value = "index" 
+        )
+        
+        st.markdown("#### Select Emoji")
+
+        with st.container() :
+            image_col1 , image_col2 = st.columns([4,1])
+            with image_col1 :
+                st.markdown(
+                    """
+                    <style>
+                        [data-testid=stImage]{
+                            text-align: center;
+                            display: block;
+                            margin-left: auto;
+                            margin-right: auto;
+                            width: 100%;
+                        }
+                    </style>
+                    """, unsafe_allow_html=True)
+                if st.session_state["remove_bg"] :
+                    st.image(st.session_state['remove_bg_image_list'][img_index], use_column_width="auto")
+                    img = st.session_state['remove_bg_image_list'][img_index]
+                else :
+                    st.image(st.session_state['image_list'][img_index], use_column_width="auto")
+                    img = st.session_state['image_list'][img_index]
+
+            with image_col2 :
+                buf = io.BytesIO()
+                img.save(buf, format = "PNG")
+                buf_img = buf.getvalue()
+
+                btn = st.download_button(
+                    label="Download image",
+                    data= buf_img,
+                    file_name = 'generated_image.png',
+                    mime="image/png",
+                    )
+                
+                st.markdown("##")
+                st.markdown("###### 배경 제거 (beta)")
+                remove_bg = st.radio(" ", (False, True), label_visibility="collapsed")
+                if remove_bg != st.session_state['remove_bg'] :
+                    st.session_state['remove_bg'] = remove_bg
+                    st.experimental_rerun()
+
+
+
+    # with right :
+
+    # st.sidebar.markdown("언어 선택")
+
     
 if __name__ == "__main__" :
     main()
