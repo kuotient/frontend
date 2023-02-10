@@ -153,7 +153,8 @@ def main():
         # label_visibility="collapsed",
     )
     # co3, col1, col2, col4 = st.columns([2,1,1,2])
-    col1, col2, col3 = st.columns([1,1,4])
+    col0, col1, col2, col3 = st.columns([1,1,1,1])
+    col0.empty()
     with col1:
         generate = st.button(label="Emoji 생성", type="primary", help="이모지를 생성합니다. 시간이 조금 걸릴 수 있습니다.")
         if generate:
@@ -235,18 +236,18 @@ def main():
         per_emoji_time = executed_time / num_images
         with col3:
             st.success(f"🎉 이모지 생성 완료! 이모지 당 {per_emoji_time:.2f}초 소요되었습니다.")
-        with st.expander("사용한 프롬프트"):
-            st.markdown(f"`{prompt}`")
+
         # st.balloons()
             
     if st.session_state['image_list'] :
-        
+        with st.expander("사용한 프롬프트"):
+            st.markdown(f"`{st.session_state.save_parameter['prompt']}`")
         # st.markdown("#### Generated Emoji's preview(s)")
         with st.expander("생성 된 Emoji", expanded=True):
             img_index = image_select(
                 label="",
                 images= st.session_state['image_list'],
-                use_container_width = 8,
+                use_container_width = 6,
                 return_value = "index" 
             )
             
