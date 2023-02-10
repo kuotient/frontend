@@ -65,7 +65,7 @@ def main():
     
     st.session_state['image_style'] = image_style
     s1,s2,s3 = st.columns(3)
-    with sidebar:
+    with st.sidebar:
         if st.session_state.image_style == "openmoji":
             s1.image("https://openmoji.org/data/color/svg/1F422.svg", width=50)
             s2.image("https://openmoji.org/data/color/svg/1F60E.svg", width=50)
