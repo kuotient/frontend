@@ -20,16 +20,16 @@ st.set_page_config(page_title="Text-to-Emoji",
         'About': 'https://github.com/boostcampaitech4lv23nlp2/final-project-level2-nlp-11'
         })
 # st.set_page_config(page_title="Text-to-Emoji", page_icon="🔮")
-streamlit_style = """
-			<style>
-			@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+# streamlit_style = """
+# 			<style>
+# 			@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 
-			html, body, [class*="css"]  {
-			font-family: 'Noto Sans KR', sans-serif;
-			}
-			</style>
-			"""
-st.markdown(streamlit_style, unsafe_allow_html=True)
+# 			html, body, [class*="css"]  {
+# 			font-family: 'Noto Sans KR', sans-serif;
+# 			}
+# 			</style>
+# 			"""
+# st.markdown(streamlit_style, unsafe_allow_html=True)
 
 
 st.image("g_logo.png")
