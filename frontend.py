@@ -71,7 +71,7 @@ def main():
         st.markdown("---")
         st.text_area(
             label= "Input Text(Prompt)",
-            placeholder = "A cute rabbit" if st.session_state.model_select=="English" else "귀여운 토끼",
+            placeholder = "A cute rabbit" if st.session_state.model_select== "한국어" else "귀여운 토끼",
             value = st.session_state.prompt,
             key="prompt",
             max_chars=75,
@@ -154,8 +154,8 @@ def main():
             
             executed_time = time.time() - start_time
             per_emoji_time = executed_time / num_images
-            st.success(f"🎉 이모지 생성 완료! 이모지 당 {per_emoji_time:.2f}초 밖에 소요하지 않았습니다!")
-            st.markdown("사용 된 프롬프트")
+            st.success(f"🎉 이모지 생성 완료! 이모지 당 {per_emoji_time:.2f}초 소요되었습니다.")
+            st.markdown("사용한 프롬프트")
             st.markdown(f"`{prompt}`")
             st.markdown("---")
             # st.balloons()
@@ -242,7 +242,7 @@ def main():
     num_inference = st.sidebar.slider("생성할 이모지 갯수",1,4,3,help="생성할 이모지의 개수를 선택할 수 있습니다.")
 
     # st.sidebar.markdown("cfg scale")
-    guidance_scale = st.sidebar.slider("Cfg scale",0, 25, 7,help="이모지가 prompt를 따라가는 정도를 조절할 수 있습니다.")
+    guidance_scale = st.sidebar.slider("Cfg scale",0, 25, 10,help="이모지가 prompt를 따라가는 정도를 조절할 수 있습니다.")
 
 
     st.session_state['model_select'] = model_select
