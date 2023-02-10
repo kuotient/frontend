@@ -13,8 +13,8 @@ from rembg import remove
 
 # st.set_page_config(page_title="Text-to-Emoji", layout="wide", page_icon="😊")
 st.set_page_config(page_title="Text-to-Emoji", layout="wide", page_icon="🔮")
-st.image("small_logo.png")
-st.sidebar.title("Text-to-Emoji 😊")
+st.image("g_logo.png")
+st.sidebar.title("Text-to-Emoji 🔮")
 st.sidebar.caption("프롬프트를 입력해 Emoji를 생성하세요!.")
 st.sidebar.markdown("Made by team [WE-FUSION](https://github.com/boostcampaitech4lv23nlp2/final-project-level2-nlp-11)")
 st.sidebar.header("Settings 🔧")
@@ -152,7 +152,7 @@ def main():
     # co3, col1, col2, col4 = st.columns([2,1,1,2])
     col1, col2, col3 = st.columns([1,1,4])
     with col1:
-        generate = st.button(label="Generate Emoji", type="primary", help="이모지를 생성합니다. 시간이 조금 걸릴 수 있습니다.")
+        generate = st.button(label="Emoji 생성", type="primary", help="이모지를 생성합니다. 시간이 조금 걸릴 수 있습니다.")
         if generate:
             if not st.session_state.prompt:
                 st.warning("프롬프트를 입력해주세요.")
@@ -162,7 +162,7 @@ def main():
                 st.error("Something is wrong.")
         
     with col2:
-        feeling_lucky = st.button(label="I'm Feeling lucky", type="secondary", help="랜덤 프롬프트를 생성합니다.")
+        feeling_lucky = st.button(label="I'm Feeling Lucky", type="secondary", help="랜덤 프롬프트를 생성합니다.")
             
         if feeling_lucky:
             if st.session_state.model_select == "English":
@@ -248,7 +248,8 @@ def main():
         
         st.markdown("#### Selected Emoji")
 
-        with st.container() :
+        # with st.container():
+        with st.expander("생성 된 Emoji", expanded=True):
             # image_col1 , image_col2 = st.columns([4,2])
             # with image_col1 :
             st.markdown(
