@@ -104,8 +104,8 @@ def main():
             #         st.session_state.submit = True
     st.markdown("---")
     st.text_area(
-        label= "Input Text(Prompt)",
-        placeholder = "A cute rabbit" if st.session_state.model_select== "English" else "귀여운 토끼",
+        label= "Prompt (Text)",
+        placeholder = "Hot air balloon floating peacefully above rolling countryside dotted with farms and fields." if st.session_state.model_select== "English" else "귀여운 토끼",
         value = st.session_state.prompt,
         key="prompt",
         max_chars=75,
@@ -115,7 +115,7 @@ def main():
     # co3, col1, col2, col4 = st.columns([2,1,1,2])
     col1, col2, col3 = st.columns([1,1,4])
     with col1:
-        generate = st.button(label="Generate Emoji", type="primary")
+        generate = st.button(label="Generate Emoji", type="primary", help="이모지를 생성합니다. 시간이 조금 걸릴 수 있습니다.")
         if generate:
             if not st.session_state.prompt:
                 st.warning("프롬프트를 입력해주세요.")
