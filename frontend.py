@@ -65,13 +65,13 @@ def main():
     
     st.session_state['image_style'] = image_style
     if st.session_state.image_style == "openmoji":
-        st.sidebar.write("![Turtle](https://openmoji.org/data/color/svg/1F422.svg{: width='50' height='50'}" + \
-                         "![Sunglasses](https://openmoji.org/data/color/svg/1F60E.svg{: width='50' height='50'}" + \
-                         "![Gem](https://openmoji.org/data/color/svg/1F48E.svg{: width='50' height='50'}")
+        st.sidebar.write("![Turtle](https://openmoji.org/data/color/svg/1F422.svg){: width='50' height='50'}" + \
+                         "![Sunglasses](https://openmoji.org/data/color/svg/1F60E.svg){: width='50' height='50'}" + \
+                         "![Gem](https://openmoji.org/data/color/svg/1F48E.svg){: width='50' height='50'}")
     else:
-        st.sidebar.write("![Turtle](https://fonts.gstatic.com/s/e/notoemoji/latest/1f422/512.gif{: width='50' height='50'}" + \
-                         "![Sunglasses](https://fonts.gstatic.com/s/e/notoemoji/latest/1f60e/512.gif{: width='50' height='50'}" + \
-                         "![Gem](https://fonts.gstatic.com/s/e/notoemoji/latest/1f48e/512.gif{: width='50' height='50'}")
+        st.sidebar.write("![Turtle](https://fonts.gstatic.com/s/e/notoemoji/latest/1f422/512.gif){: width='50' height='50'}" + \
+                         "![Sunglasses](https://fonts.gstatic.com/s/e/notoemoji/latest/1f60e/512.gif){: width='50' height='50'}" + \
+                         "![Gem](https://fonts.gstatic.com/s/e/notoemoji/latest/1f48e/512.gif){: width='50' height='50'}")
     
     # st.sidebar.markdown("이모지 아웃풋 크기")
     output_option = st.sidebar.selectbox(
