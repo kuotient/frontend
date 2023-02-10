@@ -12,7 +12,12 @@ from PIL import Image
 from rembg import remove
 
 # st.set_page_config(page_title="Text-to-Emoji", layout="wide", page_icon="😊")
-st.set_page_config(page_title="Text-to-Emoji", layout="wide", page_icon="🔮")
+st.set_page_config(page_title="Text-to-Emoji",
+                   layout="wide",
+                   page_icon="🔮",
+                   menu_items={
+        'Contact': 'https://github.com/boostcampaitech4lv23nlp2/final-project-level2-nlp-11/issues',
+        'Github': 'https://github.com/boostcampaitech4lv23nlp2/final-project-level2-nlp-11')
 # st.set_page_config(page_title="Text-to-Emoji", page_icon="🔮")
 streamlit_style = """
 			<style>
@@ -29,7 +34,7 @@ st.markdown(streamlit_style, unsafe_allow_html=True)
 st.image("g_logo.png")
 st.sidebar.title("🔮 Text-to-Emoji")
 st.sidebar.caption("프롬프트를 입력해 Emoji를 생성해보세요!")
-st.sidebar.markdown("Made by Team [WE-FUSION](https://github.com/boostcampaitech4lv23nlp2/final-project-level2-nlp-11)")
+st.sidebar.markdown("Made by [*WE-FUSION*](https://github.com/boostcampaitech4lv23nlp2/final-project-level2-nlp-11)")
 st.sidebar.header("🔧 Settings")
 
 # toggle = st.sidebar.checkbox("Toggle Update", value=True, help="Continuously update the pallete with every change in the app.")
@@ -71,7 +76,7 @@ def main():
     )
     # st.sidebar.markdown("이모지 스타일")
     image_style = st.sidebar.selectbox(
-        "이모지 스타일",
+        "Emoji 스타일",
         ("notoemoji","openmoji"),
         help="특정 스타일의 이모지를 생성할 수 있습니다. notoemoji는 구글에서 제공하는 이모지이며, openmoji는 오픈소스로 제공되는 이모지입니다."
     )
@@ -105,13 +110,13 @@ def main():
     
     # st.sidebar.markdown("이모지 아웃풋 크기")
     output_option = st.sidebar.selectbox(
-        "이모지 아웃풋 크기",
+        "Emoji 출력 크기",
         ("512","256","128"),
         help = "이모지의 출력 크기를 선택할 수 있습니다."
     )
 
     # st.sidebar.markdown("Number of outputs")
-    num_inference = st.sidebar.slider("생성할 이모지 갯수",1,4,2,help="생성할 이모지의 갯수를 선택할 수 있습니다. 1~4개까지 선택 가능합니다.")
+    num_inference = st.sidebar.slider("생성 할 emoji 갯수",1,4,2,help="생성할 emoji의 갯수를 선택할 수 있습니다. 1~4개까지 선택 가능합니다.")
     st.session_state['num_inference'] = int(num_inference)
     
     if st.session_state.num_inference == 1:
@@ -124,7 +129,7 @@ def main():
         st.sidebar.error("  예상 소요 시간: 20~25초", icon="🚨")
 
     # st.sidebar.markdown("cfg scale")
-    guidance_scale = st.sidebar.slider("Cfg scale",0, 25, 10,help="이모지가 prompt를 따라가는 정도를 조절할 수 있습니다. 0~25까지 선택 가능합니다.")
+    guidance_scale = st.sidebar.slider("Cfg scale",0, 25, 10,help="Emoji가 prompt를 따라가는 정도를 조절할 수 있습니다. 0~25까지 선택 가능합니다.")
     st.session_state['guidance_scale'] = int(guidance_scale)
     
     if st.session_state['guidance_scale'] >= 15:
@@ -156,7 +161,7 @@ def main():
             #     if submit:
             #         st.session_state.submit = True
     st.text_area(
-        label= "Prompt (Text)",
+        label= " ",
         placeholder = "Hot air balloon floating peacefully above rolling countryside dotted with farms and fields." if st.session_state.model_select== "English" else "귀여운 토끼",
         value = st.session_state.prompt,
         key="prompt",
@@ -167,7 +172,7 @@ def main():
     # co3, col1, col2, col4 = st.columns([2,1,1,2])
     col1, col2, col0, col3 = st.columns([1,1,1,2])
     with col1:
-        generate = st.button(label="Emoji 생성", type="primary", help="이모지를 생성합니다. 시간이 조금 걸릴 수 있습니다.")
+        generate = st.button(label="Emoji 생성", type="primary", help="Emoji를 생성합니다. 시간이 조금 걸릴 수 있습니다.")
         if generate:
             if not st.session_state.prompt:
                 st.warning("프롬프트를 입력해주세요.")
@@ -220,7 +225,7 @@ def main():
         st.session_state.save_parameter = data
         # 리퀘스트를 보낼 URL
         start_time = time.time()
-        with st.spinner("🔮 마법같은 능력으로 이모지 생성 중..."):
+        with st.spinner("🔮 마법같은 능력으로 emoji 생성 중..."):
         
             if st.session_state.model_select == "한국어" :
                 response = requests.post(f"{st.secrets['url']}/kor_submit", json=data)
