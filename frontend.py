@@ -116,6 +116,8 @@ def main():
     
     if st.session_state['guidance_scale'] >= 15:
         st.sidebar.warning("과도한 cfg scale 파라미터는 이미지 품질의 저하를 일으킬 수 있습니다.", icon="⚠️")
+    else:
+        st.empty()
 
 
     st.session_state['model_select'] = model_select
@@ -239,17 +241,17 @@ def main():
     if st.session_state['image_list'] :
         
         # st.markdown("#### Generated Emoji's preview(s)")
-        img_index = image_select(
-            label="",
-            images= st.session_state['image_list'],
-            use_container_width = 8,
-            return_value = "index" 
-        )
-        
-        st.markdown("#### Selected Emoji")
+        with st.expander("생성 된 Emoji", expanded=True):
+            img_index = image_select(
+                label="",
+                images= st.session_state['image_list'],
+                use_container_width = 8,
+                return_value = "index" 
+            )
+            
+            # st.markdown("#### Selected Emoji")
 
         # with st.container():
-        with st.expander("생성 된 Emoji", expanded=True):
             # image_col1 , image_col2 = st.columns([4,2])
             # with image_col1 :
             st.markdown(
@@ -278,20 +280,21 @@ def main():
             img.save(buf, format = "PNG")
             buf_img = buf.getvalue()
 
+            remove_bg = st.sidebar.checkbox("배경 제거 (beta)", value=False, key="remove_bg", help="뒷 배경을 제거합니다.")
+            if remove_bg != st.session_state['remove_bg'] :
+                st.session_state['remove_bg'] = remove_bg
+                st.experimental_rerun()
+            st.markdown("---")
             btn = st.download_button(
                 label="Download emoji",
                 data= buf_img,
-                file_name = 'generated_image.png',
+                file_name = f'{prompt}.png',
                 mime="image/png",
                 )
             if btn:
-                st.balloon()
+                st.balloons()
             # st.markdown("###### 배경 제거 (beta)")
             # remove_bg = st.radio(" ", (False, True), label_visibility="collapsed")
-        remove_bg = st.sidebar.checkbox("배경 제거 (beta)", value=False, key="remove_bg", help="뒷 배경을 제거합니다.")
-        if remove_bg != st.session_state['remove_bg'] :
-            st.session_state['remove_bg'] = remove_bg
-            st.experimental_rerun()
 
     
 if __name__ == "__main__" :
