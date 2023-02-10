@@ -153,8 +153,7 @@ def main():
         # label_visibility="collapsed",
     )
     # co3, col1, col2, col4 = st.columns([2,1,1,2])
-    col0, col1, col2, col3 = st.columns([1,1,1,1])
-    col0.empty()
+    col1, col2, col3 = st.columns([1,1,2])
     with col1:
         generate = st.button(label="Emoji 생성", type="primary", help="이모지를 생성합니다. 시간이 조금 걸릴 수 있습니다.")
         if generate:
@@ -235,7 +234,7 @@ def main():
         executed_time = time.time() - start_time
         per_emoji_time = executed_time / num_images
         with col3:
-            st.success(f"🎉 이모지 생성 완료! 이모지 당 {per_emoji_time:.2f}초 소요되었습니다.")
+            st.success(f"🎉 이모지 생성 완료! 이모지 당 {per_emoji_time:.2f}초 소요 되었습니다.")
 
         # st.balloons()
             
@@ -290,7 +289,7 @@ def main():
             btn = st.download_button(
                 label="Download emoji",
                 data= buf_img,
-                file_name = f'{st.session_state["prompt"]}.png',
+                file_name = f'{st.session_state.save_parameter["prompt"]}.png',
                 mime="image/png",
                 )
             if btn:
