@@ -65,14 +65,15 @@ def main():
     
     st.session_state['image_style'] = image_style
     s1,s2,s3 = st.columns(3)
-    if st.session_state.image_style == "openmoji":
-        st.sidebar.s1.image("https://openmoji.org/data/color/svg/1F422.svg", width=50)
-        st.sidebar.s2.image("https://openmoji.org/data/color/svg/1F60E.svg", width=50)
-        st.sidebar.s3.image("https://openmoji.org/data/color/svg/1F48E.svg", width=50)
-    else:
-        st.sidebar.s1.image("https://fonts.gstatic.com/s/e/notoemoji/latest/1f422/512.gif", width=50)
-        st.sidebar.s2.image("https://fonts.gstatic.com/s/e/notoemoji/latest/1f60e/512.gif", width=50)
-        st.sidebar.s3.image("https://fonts.gstatic.com/s/e/notoemoji/latest/1f48e/512.gif", width=50)
+    with sidebar:
+        if st.session_state.image_style == "openmoji":
+            s1.image("https://openmoji.org/data/color/svg/1F422.svg", width=50)
+            s2.image("https://openmoji.org/data/color/svg/1F60E.svg", width=50)
+            s3.image("https://openmoji.org/data/color/svg/1F48E.svg", width=50)
+        else:
+            s1.image("https://fonts.gstatic.com/s/e/notoemoji/latest/1f422/512.gif", width=50)
+            s2.image("https://fonts.gstatic.com/s/e/notoemoji/latest/1f60e/512.gif", width=50)
+            s3.image("https://fonts.gstatic.com/s/e/notoemoji/latest/1f48e/512.gif", width=50)
     
     # st.sidebar.markdown("이모지 아웃풋 크기")
     output_option = st.sidebar.selectbox(
