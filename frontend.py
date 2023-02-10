@@ -12,8 +12,8 @@ from PIL import Image
 from rembg import remove
 
 # st.set_page_config(page_title="Text-to-Emoji", layout="wide", page_icon="😊")
-# st.set_page_config(page_title="Text-to-Emoji", layout="wide", page_icon="🔮")
-st.set_page_config(page_title="Text-to-Emoji", page_icon="🔮")
+st.set_page_config(page_title="Text-to-Emoji", layout="wide", page_icon="🔮")
+# st.set_page_config(page_title="Text-to-Emoji", page_icon="🔮")
 st.image("g_logo.png")
 st.sidebar.title("🔮 Text-to-Emoji")
 st.sidebar.caption("프롬프트를 입력해 Emoji를 생성해보세요!")
@@ -153,7 +153,7 @@ def main():
         # label_visibility="collapsed",
     )
     # co3, col1, col2, col4 = st.columns([2,1,1,2])
-    col1, col2, col3 = st.columns([1,1,2])
+    col1, col2, col0, col3 = st.columns([1,1,1,2])
     with col1:
         generate = st.button(label="Emoji 생성", type="primary", help="이모지를 생성합니다. 시간이 조금 걸릴 수 있습니다.")
         if generate:
@@ -178,7 +178,7 @@ def main():
             lucky_prompt = random.choice(sample_prompts)
             # print(lucky_prompt)
             st.session_state.submit = True
-    
+    col0.empty()
     if st.session_state.submit:
         if feeling_lucky:
             data = {
@@ -234,7 +234,7 @@ def main():
         executed_time = time.time() - start_time
         per_emoji_time = executed_time / num_images
         with col3:
-            st.success(f"🎉 이모지 생성 완료! 이모지 당 {per_emoji_time:.2f}초 소요 되었습니다.")
+            st.success(f"🎉 생성 완료! Emoji 당 {per_emoji_time:.1f}초 소요 되었습니다.")
 
         # st.balloons()
             
@@ -285,7 +285,6 @@ def main():
             if remove_bg != st.session_state['remove_bg'] :
                 st.session_state['remove_bg'] = remove_bg
                 st.experimental_rerun()
-            st.markdown("---")
             btn = st.download_button(
                 label="Download emoji",
                 data= buf_img,
