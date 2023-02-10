@@ -98,17 +98,17 @@ def main():
     )
 
     # st.sidebar.markdown("Number of outputs")
-    num_inference = st.sidebar.slider("생성할 이모지 갯수",1,4,3,help="생성할 이모지의 갯수를 선택할 수 있습니다. 1~4개까지 선택 가능합니다.")
+    num_inference = st.sidebar.slider("생성할 이모지 갯수",1,4,2,help="생성할 이모지의 갯수를 선택할 수 있습니다. 1~4개까지 선택 가능합니다.")
     st.session_state['num_inference'] = int(num_inference)
     
     if st.session_state.num_inference == 1:
-        st.sidebar.info(" 예상 소요 시간: 5~6초", icon="ℹ️")
+        st.sidebar.info("  예상 소요 시간: 5~6초", icon="ℹ️")
     elif st.session_state.num_inference == 2:
-        st.sidebar.info(" 예상 소요 시간: 10~12초", icon="ℹ️")
+        st.sidebar.info("  예상 소요 시간: 10~12초", icon="ℹ️")
     elif st.session_state.num_inference == 3:
-        st.sidebar.warning(" 예상 소요 시간: 16~20초", icon="⚠️")
+        st.sidebar.warning("  예상 소요 시간: 16~20초", icon="⚠️")
     else:
-        st.sidebar.error(" 예상 소요 시간: 20~25초", icon="🚨")
+        st.sidebar.error("  예상 소요 시간: 20~25초", icon="🚨")
 
     # st.sidebar.markdown("cfg scale")
     guidance_scale = st.sidebar.slider("Cfg scale",0, 25, 10,help="이모지가 prompt를 따라가는 정도를 조절할 수 있습니다. 0~25까지 선택 가능합니다.")
