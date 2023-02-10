@@ -64,9 +64,9 @@ def main():
     )
     
     if st.session_state.image_style == "openmoji":
-        st.image("https://openmoji.org/data/color/svg/1F422.svg", width=20)
+        st.sidebar.image("https://openmoji.org/data/color/svg/1F422.svg", width=100)
     else:
-        st.image("https://fonts.gstatic.com/s/e/notoemoji/latest/1f422/512.gif", width=20)
+        st.sidebar.image("https://fonts.gstatic.com/s/e/notoemoji/latest/1f422/512.gif", width=100)
     
     # st.sidebar.markdown("이모지 아웃풋 크기")
     output_option = st.sidebar.selectbox(
