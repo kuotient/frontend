@@ -16,10 +16,10 @@ st.set_page_config(page_title="Text-to-Emoji", layout="wide", page_icon="🔮")
 # st.set_page_config(page_title="Text-to-Emoji", page_icon="🔮")
 streamlit_style = """
 			<style>
-			@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+			@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 
 			html, body, [class*="css"]  {
-			font-family: 'Roboto', sans-serif;
+			font-family: 'Noto Sans KR', sans-serif;
 			}
 			</style>
 			"""
