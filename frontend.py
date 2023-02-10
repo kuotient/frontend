@@ -59,9 +59,14 @@ def main():
     # st.sidebar.markdown("이모지 스타일")
     image_style = st.sidebar.selectbox(
         "이모지 스타일",
-        ("openmoji","notoemoji"),
-        help="특정 스타일의 이모지를 생성할 수 있습니다."
+        ("notoemoji","openmoji"),
+        help="특정 스타일의 이모지를 생성할 수 있습니다. notoemoji는 구글에서 제공하는 이모지이며, openmoji는 오픈소스로 제공되는 이모지입니다."
     )
+    
+    if st.session_state.image_style = "openmoji":
+        st.image("https://openmoji.org/data/color/svg/1F422.svg", width=20)
+    else:
+        st.image("https://fonts.gstatic.com/s/e/notoemoji/latest/1f422/512.gif", width=20)
     
     # st.sidebar.markdown("이모지 아웃풋 크기")
     output_option = st.sidebar.selectbox(
@@ -71,10 +76,10 @@ def main():
     )
 
     # st.sidebar.markdown("Number of outputs")
-    num_inference = st.sidebar.slider("생성할 이모지 갯수",1,4,3,help="생성할 이모지의 개수를 선택할 수 있습니다.")
+    num_inference = st.sidebar.slider("생성할 이모지 갯수",1,4,3,help="생성할 이모지의 갯수를 선택할 수 있습니다. 1~4개까지 선택 가능합니다.")
 
     # st.sidebar.markdown("cfg scale")
-    guidance_scale = st.sidebar.slider("Cfg scale",0, 25, 10,help="이모지가 prompt를 따라가는 정도를 조절할 수 있습니다.")
+    guidance_scale = st.sidebar.slider("Cfg scale",0, 25, 10,help="이모지가 prompt를 따라가는 정도를 조절할 수 있습니다. 0~25까지 선택 가능합니다.")
 
 
     st.session_state['model_select'] = model_select
