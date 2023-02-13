@@ -6,3 +6,4 @@ GitPython==3.1.30
 streamlit-image-select==0.5.1
 pillow==9.3.0
 streamlit-nested-layout
+streamlit-analytics
