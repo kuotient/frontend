@@ -5,51 +5,31 @@ import random
 import requests
 import streamlit_nested_layout
 from streamlit_image_select import image_select
+import streamlit_analytics
 import os
 import time
 
 from PIL import Image
 from rembg import remove
 
-import streamlit_analytics
+# st.set_page_config(page_title="Text-to-Emoji", layout="wide", page_icon="😊")
+st.set_page_config(page_title="Text-to-Emoji",
+                layout="wide",
+                page_icon="🔮",
+                menu_items={
+        'Get help': 'https://github.com/boostcampaitech4lv23nlp2/final-project-level2-nlp-11/issues',
+        'About': 'https://github.com/boostcampaitech4lv23nlp2/final-project-level2-nlp-11'
+        })
 
-with streamlit_analytics.track():
-
-    # st.set_page_config(page_title="Text-to-Emoji", layout="wide", page_icon="😊")
-    st.set_page_config(page_title="Text-to-Emoji",
-                    layout="wide",
-                    page_icon="🔮",
-                    menu_items={
-            'Get help': 'https://github.com/boostcampaitech4lv23nlp2/final-project-level2-nlp-11/issues',
-            'About': 'https://github.com/boostcampaitech4lv23nlp2/final-project-level2-nlp-11'
-            })
-    # st.set_page_config(page_title="Text-to-Emoji", page_icon="🔮")
-    # streamlit_style = """
-    # 			<style>
-    # 			@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
-
-    # 			html, body, [class*="css"]  {
-    # 			font-family: 'Noto Sans KR', sans-serif;
-    # 			}
-    # 			</style>
-    # 			"""
-    # st.markdown(streamlit_style, unsafe_allow_html=True)
-
-
+def main():
+    # left, right = st.columns([4, 1])
     st.image("g_logo.png")
-    st.sidebar.title("🔮 Text-to-Emoji")
-    st.sidebar.caption("프롬프트를 입력해 Emoji를 생성해보세요!")
-    st.sidebar.markdown("Made by [*WE-FUSION*](https://github.com/boostcampaitech4lv23nlp2/final-project-level2-nlp-11)")
-    st.sidebar.header("🔧 Settings")
-
-    # toggle = st.sidebar.checkbox("Toggle Update", value=True, help="Continuously update the pallete with every change in the app.")
-    # palette_size = int(st.sidebar.number_input("palette size", min_value=1, max_value=20, value=5, step=1, help="Number of colors to infer from the image."))
-    # sample_size = int(st.sidebar.number_input("sample size", min_value=5, max_value=3000, value=500, step=500, help="Number of sample pixels to pick from the image."))
-    # seed = int(st.sidebar.number_input("random seed", value=42, help="Seed used for all random samplings."))
-
-    def main():
-        # left, right = st.columns([4, 1])
-
+    with streamlit_analytics.track():
+        with st.sidebar():
+            st.title("🔮 Text-to-Emoji")
+            st.caption("프롬프트를 입력해 Emoji를 생성해보세요!")
+            st.markdown("Made by [*WE-FUSION*](https://github.com/boostcampaitech4lv23nlp2/final-project-level2-nlp-11)")
+            st.header("🔧 Settings")
         if "submit" not in st.session_state:
             st.session_state["submit"] = False
         if "prompt" not in st.session_state:
@@ -73,18 +53,19 @@ with streamlit_analytics.track():
         if "image_style" not in st.session_state :
             st.session_state['image_style'] = ""
         
-        model_select = st.sidebar.radio(
-            "프롬프트 언어 선택",
-            ("English",
-            "한국어",),
-            help="프롬프트에 쓸 언어를 선택할 수 있습니다. 영어 입력 선택 시 성능이 좀 더 좋은 경향이 있습니다."
-        )
-        # st.sidebar.markdown("이모지 스타일")
-        image_style = st.sidebar.selectbox(
-            "Emoji 스타일",
-            ("notoemoji","openmoji"),
-            help="특정 스타일의 이모지를 생성할 수 있습니다. notoemoji는 구글에서 제공하는 이모지이며, openmoji는 오픈소스로 제공되는 이모지입니다."
-        )
+        with st.sidebar():
+            model_select = st.sidebar.radio(
+                "프롬프트 언어 선택",
+                ("English",
+                "한국어",),
+                help="프롬프트에 쓸 언어를 선택할 수 있습니다. 영어 입력 선택 시 성능이 좀 더 좋은 경향이 있습니다."
+            )
+            # st.sidebar.markdown("이모지 스타일")
+            image_style = st.sidebar.selectbox(
+                "Emoji 스타일",
+                ("notoemoji","openmoji"),
+                help="특정 스타일의 이모지를 생성할 수 있습니다. notoemoji는 구글에서 제공하는 이모지이며, openmoji는 오픈소스로 제공되는 이모지입니다."
+            )
         
         st.session_state['image_style'] = image_style
         noto_html = """
@@ -121,7 +102,8 @@ with streamlit_analytics.track():
         )
 
         # st.sidebar.markdown("Number of outputs")
-        num_inference = st.sidebar.slider("생성 할 emoji 갯수",1,4,2,help="생성할 emoji의 갯수를 선택할 수 있습니다. 1~4개까지 선택 가능합니다.")
+        with st.sidebar():
+            num_inference = st.sidebar.slider("생성 할 emoji 갯수",1,4,2,help="생성할 emoji의 갯수를 선택할 수 있습니다. 1~4개까지 선택 가능합니다.")
         st.session_state['num_inference'] = int(num_inference)
         
         if st.session_state.num_inference == 1:
@@ -134,7 +116,8 @@ with streamlit_analytics.track():
             st.sidebar.error("  예상 소요 시간: 20~25초", icon="🚨")
 
         # st.sidebar.markdown("cfg scale")
-        guidance_scale = st.sidebar.slider("Cfg scale",0, 25, 10,help="Emoji가 prompt를 따라가는 정도를 조절할 수 있습니다. 0~25까지 선택 가능합니다.")
+        with st.sidebar():
+            guidance_scale = st.sidebar.slider("Cfg scale",0, 25, 10,help="Emoji가 prompt를 따라가는 정도를 조절할 수 있습니다. 0~25까지 선택 가능합니다.")
         st.session_state['guidance_scale'] = int(guidance_scale)
         
         if st.session_state['guidance_scale'] >= 15:
@@ -341,5 +324,6 @@ with streamlit_analytics.track():
                 st.markdown("[WebUI](https://github.com/AUTOMATIC1111/stable-diffusion-webui)")
                 st.markdown("[Stable Diffusion 공식 디스코드](https://discord.com/invite/stablediffusion)")
                 st.markdown("####")
+                
 if __name__ == "__main__" :
     main()
