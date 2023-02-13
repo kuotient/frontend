@@ -25,7 +25,7 @@ def main():
     # left, right = st.columns([4, 1])
     st.image("g_logo.png")
     with streamlit_analytics.track():
-        with st.sidebar():
+        with st.sidebar:
             st.title("🔮 Text-to-Emoji")
             st.caption("프롬프트를 입력해 Emoji를 생성해보세요!")
             st.markdown("Made by [*WE-FUSION*](https://github.com/boostcampaitech4lv23nlp2/final-project-level2-nlp-11)")
@@ -53,15 +53,15 @@ def main():
         if "image_style" not in st.session_state :
             st.session_state['image_style'] = ""
         
-        with st.sidebar():
-            model_select = st.sidebar.radio(
+        with st.sidebar:
+            model_select = st.radio(
                 "프롬프트 언어 선택",
                 ("English",
                 "한국어",),
                 help="프롬프트에 쓸 언어를 선택할 수 있습니다. 영어 입력 선택 시 성능이 좀 더 좋은 경향이 있습니다."
             )
             # st.sidebar.markdown("이모지 스타일")
-            image_style = st.sidebar.selectbox(
+            image_style = st.selectbox(
                 "Emoji 스타일",
                 ("notoemoji","openmoji"),
                 help="특정 스타일의 이모지를 생성할 수 있습니다. notoemoji는 구글에서 제공하는 이모지이며, openmoji는 오픈소스로 제공되는 이모지입니다."
@@ -102,8 +102,8 @@ def main():
         )
 
         # st.sidebar.markdown("Number of outputs")
-        with st.sidebar():
-            num_inference = st.sidebar.slider("생성 할 emoji 갯수",1,4,2,help="생성할 emoji의 갯수를 선택할 수 있습니다. 1~4개까지 선택 가능합니다.")
+        with st.sidebar:
+            num_inference = st.slider("생성 할 emoji 갯수",1,4,2,help="생성할 emoji의 갯수를 선택할 수 있습니다. 1~4개까지 선택 가능합니다.")
         st.session_state['num_inference'] = int(num_inference)
         
         if st.session_state.num_inference == 1:
@@ -116,8 +116,8 @@ def main():
             st.sidebar.error("  예상 소요 시간: 20~25초", icon="🚨")
 
         # st.sidebar.markdown("cfg scale")
-        with st.sidebar():
-            guidance_scale = st.sidebar.slider("Cfg scale",0, 25, 10,help="Emoji가 prompt를 따라가는 정도를 조절할 수 있습니다. 0~25까지 선택 가능합니다.")
+        with st.sidebar:
+            guidance_scale = st.slider("Cfg scale",0, 25, 10,help="Emoji가 prompt를 따라가는 정도를 조절할 수 있습니다. 0~25까지 선택 가능합니다.")
         st.session_state['guidance_scale'] = int(guidance_scale)
         
         if st.session_state['guidance_scale'] >= 15:
