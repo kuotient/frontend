@@ -148,6 +148,7 @@ def main():
                 #     submit = st.form_submit_button(label="submit")
                 #     if submit:
                 #         st.session_state.submit = True
+        st.warning("Deprecated. 전체 프로젝트는 Github을 참고해주세요. https://github.com/boostcampaitech4lv23nlp2/final-project-level2-nlp-11")
         st.text_input(
             label= " ",
             placeholder = "Hot air balloon floating peacefully above rolling countryside dotted with farms and fields." if st.session_state.model_select== "English" else "귀여운 토끼",
